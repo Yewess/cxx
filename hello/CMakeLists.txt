@@ -12,8 +12,8 @@ project(HELLO CXX)
 #add_subdirectory(Hello)
 #add_subdirectory(Demo)
 
-# Flags to pass to the compiler
-add_definitions(-ggdb -c -Wall -Werror -std=c++11 -pthread -march=native )
+# Global flags to pass to the compiler for everything here and below
+add_definitions(-c -Wall -Werror -std=c++11 -pthread -march=native)
 
 # Enable testing for current directory and below
 enable_testing()
@@ -26,7 +26,24 @@ enable_testing()
 
 # Add executable target <name> to build from source files listed
 add_executable(hello hello.c++)
+add_executable(hello_test hello_test.c++)
+
+# Add a dependency between top-level targets
+add_dependencies(hello_test hello)
+
+# Add compile options to a target.
+# target, scope, items
+target_compile_options(hello_test PUBLIC -ggdb)
+
+# Add compile definitions (i.e. -Dfoo ) to a target.
+# target, scope, items
+target_compile_definitions(hello_test PUBLIC -DDEBUG)
+
+# Append to INCLUDE_DIRECTORIES property for specific target
+set_property(TARGET hello_test
+             APPEND_STRING
+             PROPERTY INCLUDE_DIRECTORIES /usr/include/pstreams)
 
 # Add test to the project with name, exename, arg1...argN
 # name can specify an executable target
-add_test(hello hello)
+add_test(hello_test hello_test)
