@@ -1,12 +1,12 @@
-#include <cstring>
-#include <cstddef>
-#include <cstdint>
 #include <MaxDS18B20.h>
 
 #ifdef __AVR__
     #include <Arduino.h>
     #include <OneWire.h>
 #else
+    #include <cstring>
+    #include <cstddef>
+    #include <cstdint>
     #include <FakeOneWire.h>
 #endif //__AVR__
 

@@ -1,14 +1,14 @@
 
 #ifndef MAXDS18B20_H
 #define MAXDS18B20_H
-#include <cstring>
-#include <cstddef>
-#include <cstdint>
 
 #ifdef __AVR__
     #include <Arduino.h>
     #include <OneWire.h>
 #else
+    #include <cstring>
+    #include <cstddef>
+    #include <cstdint>
     #include <FakeOneWire.h>
 #endif //__AVR__
 
