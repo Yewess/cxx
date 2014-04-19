@@ -1,5 +1,10 @@
-#include <cstddef>
-#include <cstdint>
+#ifdef __AVR__
+    #include <Arduino.h>
+#else
+    #include <cstddef>
+    #include <cstdint>
+#endif // __AVR__
+
 #include "MovingAvg.h"
 
 int16_t SimpleMovingAvg::append(int16_t data_point) {

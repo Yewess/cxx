@@ -2,8 +2,12 @@
 #ifndef MOVINGAVG_H
 #define MOVINGAVG_H
 
-#include <cstddef>
-#include <cstdint>
+#ifdef __AVR__
+    #include <Arduino.h>
+#else
+    #include <cstddef>
+    #include <cstdint>
+#endif // __AVR__
 
 class SimpleMovingAvg {
     private:
