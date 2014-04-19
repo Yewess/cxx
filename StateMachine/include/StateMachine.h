@@ -1,8 +1,12 @@
 #ifndef STATEMACHINE_H
 #define STATEMACHINE_H
 
-#include <cstddef>
-#include <cstdint>
+#ifdef __AVR__
+    #include <Arduino.h>
+#else
+    #include <cstddef>
+    #include <cstdint>
+#endif // __AVR__
 
 class StateMachine;
 typedef class StateMachine StateMachine;
