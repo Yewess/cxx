@@ -19,8 +19,8 @@ class StateMachine {
         class StateInfo {
             private:
                 /* Static Data Members */
-                static const uint8_t emptyStateID = (uint8_t)-1;
-                static constexpr StateFunc emptyStateFunc = NULL;
+                static const uint8_t emptyStateID;
+                static const StateFunc emptyStateFunc;
             public:
                 /* Data Members */
                 uint8_t stateID;

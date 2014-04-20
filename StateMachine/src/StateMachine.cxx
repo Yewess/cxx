@@ -36,6 +36,10 @@ inline void StateMachine::StateInfo::makeEmpty(void) {
 }
 
 // Private
+
+const uint8_t StateMachine::StateInfo::emptyStateID = (uint8_t)-1;
+const StateFunc StateMachine::StateInfo::emptyStateFunc = NULL;
+
 // return pointer to empty StateInfo or NULL if full
 StateMachine::StateInfo* StateMachine::nextEmpty(void) {
     for (uint8_t index=0; index < maxStates; index++)
