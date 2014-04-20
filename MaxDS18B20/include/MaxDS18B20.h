@@ -31,11 +31,19 @@ struct MaxDS18B20 {
         union MaxRom {
 
             // Data Members
-            struct alignas(uint8_t) {
-                uint8_t family :8;
-                uint8_t serial[DS18B20_SERIAL_BYTES];
-                uint8_t crc8 :8;
-            } rom;
+            #ifdef __AVR__
+                struct {
+                    uint8_t family;
+                    uint8_t serial[DS18B20_SERIAL_BYTES];
+                    uint8_t crc8;
+                } rom;
+            #else
+                struct alignas(uint8_t) {
+                    uint8_t family :8;
+                    uint8_t serial[DS18B20_SERIAL_BYTES];
+                    uint8_t crc8 :8;
+                } rom;
+            #endif // __AVR__
             uint8_t bytes[DS18B20_ROM_BYTES];
 
             // Member Functions
@@ -81,19 +89,32 @@ struct MaxDS18B20 {
         OneWire& oneWire;
         const MaxRom& maxRom;
         bool locked;  // call to startConversion is uninterrupted
-        union alignas(uint8_t) MaxMem {
+        union MaxMem {
 
             // Data Members
-            struct alignas(uint8_t) {
-                int16_t temperature :16;
-                int8_t  high_alarm :8;
-                int8_t  low_alarm :8;
-                uint8_t configuration :8;
-                uint8_t reserved_1 :8;
-                uint8_t reserved_2 :8;
-                uint8_t reserved_3 :8;
-                uint8_t crc8 :8;
-            } mem;
+            #ifdef __AVR__
+                struct {
+                    int16_t temperature;
+                    int8_t  high_alarm;
+                    int8_t  low_alarm;
+                    uint8_t configuration;
+                    uint8_t reserved_1;
+                    uint8_t reserved_2;
+                    uint8_t reserved_3;
+                    uint8_t crc8;
+                } mem;
+            #else
+                struct alignas(uint8_t) {
+                    int16_t temperature :16;
+                    int8_t  high_alarm :8;
+                    int8_t  low_alarm :8;
+                    uint8_t configuration :8;
+                    uint8_t reserved_1 :8;
+                    uint8_t reserved_2 :8;
+                    uint8_t reserved_3 :8;
+                    uint8_t crc8 :8;
+                } mem;
+            #endif // __AVR__
             uint8_t bytes[DS18B20_MEM_BYTES];
 
             // Member Functions
