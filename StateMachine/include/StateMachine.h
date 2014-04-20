@@ -12,14 +12,14 @@ class StateMachine;
 typedef class StateMachine StateMachine;
 typedef void (*StateFunc)(StateMachine* state_machine);
 
+/* Static Data Members */
+static const uint8_t emptyStateID = (uint8_t)-1;
+static const StateFunc emptyStateFunc = NULL;
+
 class StateMachine {
     private:
         /* Member Types */
         class StateInfo {
-            private:
-                /* Static Data Members */
-                static const uint8_t emptyStateID = (uint8_t)-1;
-                static constexpr StateFunc emptyStateFunc = NULL;
             public:
                 /* Data Members */
                 uint8_t stateID;
