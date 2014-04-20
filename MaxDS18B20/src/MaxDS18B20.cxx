@@ -1,5 +1,3 @@
-#include <MaxDS18B20.h>
-
 #ifdef __AVR__
     #include <Arduino.h>
     #include <OneWire.h>
@@ -9,6 +7,8 @@
     #include <cstdint>
     #include <FakeOneWire.h>
 #endif //__AVR__
+
+#include "MaxDS18B20.h"
 
 /*                                               *\
  *                  Public                       *
