@@ -2,6 +2,7 @@
 #define STATEMACHINE_H
 
 #ifdef __AVR__
+    #include <stdint.h>
     #include <Arduino.h>
 #else
     #include <cstddef>
