@@ -4,6 +4,7 @@
 
 #ifdef __AVR__
     #include <stdint.h>
+    #include <avr/pgmspace.h>
     #include <Arduino.h>
     #include <OneWire.h>
 #else
@@ -50,7 +51,7 @@ struct MaxDS18B20 {
             bool crcIsValid(void) const;
             bool isDS18B20(void) const;
 #ifdef __AVR__
-            String toStr(void) const;
+            void serial_print(void) const;
 #endif // __AVR__
         };
 
@@ -120,7 +121,7 @@ struct MaxDS18B20 {
             // Member Functions
             bool crcIsValid(void) const;
 #ifdef __AVR__
-            String toStr(void) const;
+            void serial_print(void) const;
 #endif // __AVR__
         } maxMem;
         // Member Functions

@@ -1,6 +1,7 @@
 #ifdef __AVR__
     #include <stdint.h>
     #include <Arduino.h>
+    #include <HardwareSerial.h>
     #include <OneWire.h>
 #else
     #include <cstring>
@@ -16,17 +17,14 @@
 \*                                               */
 
 #ifdef __AVR__
-String MaxDS18B20::MaxRom::toStr(void) const {
-    String str("Family: 0x");
-    str += String(rom.family, HEX);
-    str += " Serial:";
-    for (uint8_t idx=0; idx < DS18B20_SERIAL_BYTES; idx++) {
-        str += " 0x";
-        str += String(rom.serial[idx], HEX);
-    }
-    str += " CRC8: 0x";
-    str += String(rom.crc8, HEX);
-    return str;
+void MaxDS18B20::MaxRom::serial_print(void) const {
+    Serial.print(F("Family: 0x"));
+    Serial.print(rom.family, HEX);
+    Serial.print(F(" Serial: 0x"));
+    for (uint8_t idx=0; idx < DS18B20_SERIAL_BYTES; idx++)
+        Serial.print(serial[idx], HEX)
+    Serial.print(F(" CRC8: 0x"));
+    Serial.println(crc8, HEX);
 }
 #endif // __AVR__
 
@@ -159,17 +157,16 @@ int16_t MaxDS18B20::getTempF(void) {
 \*                                               */
 
 #ifdef __AVR__
-String MaxDS18B20::MaxMem::toStr(void) const {
-    String str("Temperature: ");
-    str += mem.temperature;
-    str += " High Alarm: ";
-    str += mem.high_alarm;
-    str += " Low Alarm: ";
-    str += mem.low_alarm;
-    str += " Configuration: 0x";
-    str += String(mem.configuration, HEX);
-    str += " CRC8: 0x";
-    str += String(mem.crc8, HEX);
-    return str;
+void MaxDS18B20::MaxMem::serial_print(void) const {
+    Serial.print(F("Temperature: "));
+    Serial.print(mem.temperature);
+    Serial.print(F(" High Alarm: "));
+    Serial.print(mem.high_alarm);
+    Serial.print(F(" Low Alarm: "));
+    Serial.print(mem.low_alarm);
+    Serial.print(F(" Configuration: 0x"));
+    Serial.print((mem.configuration, HEX);
+    Serial.print(F(" CRC8: 0x"));
+    Serial.println(mem.crc8, HEX);
 }
 #endif // __AVR__
