@@ -4,7 +4,7 @@
 
 struct OneWire {
     public:
-        static const uint8_t FAKE_ONEWIRE_MEMDATA_LEN = 9;
+        static const uint8_t FAKE_ONEWIRE_MEMDATA_LEN = 10;
         uint8_t memdata[FAKE_ONEWIRE_MEMDATA_LEN];
         OneWire(void) {
             reset_search();
@@ -22,8 +22,8 @@ struct OneWire {
             return memdata[0];
         }
         void read_bytes(uint8_t *buf, uint16_t count) {
-            for (uint16_t c=0; c < count; c++)
-                buf[c] = memdata[c];
+            for (uint16_t c=1; c < count+1; c++)
+                buf[c-1] = memdata[c];
         }
         uint8_t read_bit(void) {
             return memdata[0];

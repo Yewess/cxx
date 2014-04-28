@@ -38,19 +38,19 @@ int main(int argc, char** argv) {
     for (uint8_t c=0; c < ow.FAKE_ONEWIRE_MEMDATA_LEN; c++)
         ow.memdata[c] = 0;
     ow.memdata[0] = max.DS18B20_READ_MEM;
-    ow.memdata[1] = 0xAA;  // temp lsb
-    ow.memdata[2] = 0x55;  // high alarm
-    ow.memdata[3] = 0xAA;  // low_alarm
-    ow.memdata[4] = 0xFF;  // configuration
-    ow.memdata[8] = ow.crc8(ow.memdata, max.DS18B20_MEM_BYTES-1);
-    ow.memdata[0] = 0; // read will write coimmand here
+    ow.memdata[1] = 0xAA;  // temp msb
+    ow.memdata[2] = 0x55;  // temp lsb
+    ow.memdata[3] = 0xAA;  // high_alarm
+    ow.memdata[4] = 0x55;  // low_alarm
+    ow.memdata[5] = 0xAA;  // configuration
+    ow.memdata[9] = ow.crc8(&ow.memdata[1], max.DS18B20_MEM_BYTES-1);
     cout << "Reading..." << endl;
     require(max.readMem());
     cout << "Check high alarm" << endl;
-    require(max.getHighAlarm() == (int8_t)0x55);
+    require(max.getHighAlarm() == (int8_t)0xAA);
     cout << "Check low alarm" << endl;
-    require(max.getLowAlarm() == (int8_t)0xAA);
-    cout << "Check resulution" << endl;
-    require(max.getResolution() == (uint8_t)0x0C);
+    require(max.getLowAlarm() == (int8_t)0x55);
+    cout << "Check resolution" << endl;
+    require(max.getResolution() == (uint8_t)0xa); // from 0xAA
     return EXIT_SUCCESS;
 }

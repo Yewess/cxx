@@ -22,9 +22,9 @@ void MaxDS18B20::MaxRom::serial_print(void) const {
     Serial.print(rom.family, HEX);
     Serial.print(F(" Serial: 0x"));
     for (uint8_t idx=0; idx < DS18B20_SERIAL_BYTES; idx++)
-        Serial.print(serial[idx], HEX)
+        Serial.print(rom.serial[idx], HEX);
     Serial.print(F(" CRC8: 0x"));
-    Serial.println(crc8, HEX);
+    Serial.println(rom.crc8, HEX);
 }
 #endif // __AVR__
 
@@ -145,11 +145,43 @@ bool MaxDS18B20::loadMem(bool all) {
 }
 
 int16_t MaxDS18B20::getTempC(void) {
-    return ( (int32_t)maxMem.mem.temperature * 100 ) / 1600;
+    // Depending on resolution, some bits are undefined
+    int32_t result = maxMem.mem.temperature;
+    switch (getResolution()) {
+        case 9:
+            result &= ~7; // 11111111 11111000 mask
+            // Avoid using floating point
+            result *= (int32_t) 500000; // 0.5°C increments
+            break;
+        case 10:
+            result &= ~3; // 11111111 11111100 mask
+            // Avoid using floating point
+            result *= (int32_t) 250000; // 0.25°C increments
+            break;
+        case 11:
+            result &= ~1; // 11111111 11111110 mask
+            // Avoid using floating point
+            result *= (int32_t) 125000; // 0.125°C increments
+            break;
+        case 12:
+            // no manipulation needed
+            result = result;
+            // Avoid using floating point
+            result *= (int32_t) 62500; // 0.0625°C increments
+            break;
+        default:
+            result = 0;
+    }
+    // Avoid using floating point
+    return result / 10000;
 }
 
 int16_t MaxDS18B20::getTempF(void) {
-    return ( (int32_t)getTempC() * 180 ) + 3200;
+    int32_t result = getTempC();
+    result *= 18;
+    result /= 10;
+    result += 3200;
+    return result;
 }
 
 /*                                               *\
@@ -165,7 +197,7 @@ void MaxDS18B20::MaxMem::serial_print(void) const {
     Serial.print(F(" Low Alarm: "));
     Serial.print(mem.low_alarm);
     Serial.print(F(" Configuration: 0x"));
-    Serial.print((mem.configuration, HEX);
+    Serial.print(mem.configuration, HEX);
     Serial.print(F(" CRC8: 0x"));
     Serial.println(mem.crc8, HEX);
 }
