@@ -87,11 +87,13 @@ bool MaxDS18B20::writeMem(void) const {
 
 bool MaxDS18B20::conversionDone(void) {
     if (locked)
-        if (oneWire.read_bit()) {
+        if (oneWire.read_bit() == 1) { // done
             locked = false;
             return true;
-        }
-    return false;
+        } else // not done
+            return false;
+    else
+        return true;
 }
 
 bool MaxDS18B20::startConversion(bool all) {
