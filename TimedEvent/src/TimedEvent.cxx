@@ -1,14 +1,24 @@
+
+#include <stdint.h>
 #include "TimedEvent.h"
 
 TimedEvent::TimedEvent(const Millis& current_time,
                        const Millis& interval_time,
-                       const EventFunc event_func)
+                       EventFunc event_func)
                        :
                        currentTime(current_time),
                        intervalTime(interval_time),
                        eventFunc(event_func),
                        previousTime(current_time),
                        elapsedTime(0) {}
+
+void TimedEvent::reInitIfNot(EventFunc event_func) {
+    if (eventFunc != event_func) {
+        eventFunc = event_func;
+        previousTime = currentTime;
+        elapsedTime = 0;
+    }
+}
 
 const Millis& TimedEvent::elapsed(void) {
     static Millis elapsed_result;
