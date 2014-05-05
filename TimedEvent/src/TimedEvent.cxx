@@ -12,11 +12,14 @@ TimedEvent::TimedEvent(const Millis& current_time,
                        previousTime(current_time),
                        elapsedTime(0) {}
 
-void TimedEvent::reInitIfNot(EventFunc event_func) {
+bool TimedEvent::reInitIfNot(EventFunc event_func) {
     if (eventFunc != event_func) {
         eventFunc = event_func;
         previousTime = currentTime;
         elapsedTime = 0;
+        return true;
+    } else {
+        return false;
     }
 }
 

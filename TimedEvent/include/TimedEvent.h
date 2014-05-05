@@ -27,7 +27,8 @@ class TimedEvent {
         TimedEvent(const Millis& current_time,
                    const Millis& interval_time,
                    EventFunc event_func);
-        void reInitIfNot(EventFunc event_func);
+        // return true if eventFunc updated to event_func
+        bool reInitIfNot(EventFunc event_func);
         const Millis& elapsed(void);
             // returns elapsed time (assumes previousTime != 0 != elapsedTime)
         bool update(void);
