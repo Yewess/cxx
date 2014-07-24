@@ -3,15 +3,14 @@
 #define TIMEDEVENT_H
 
 #include <stdint.h>
-#include "TimedEvent.h"
 
 typedef unsigned long Millis;
 
-const unsigned long MAX_MILLIS = (long)-1;
+const unsigned long MAX_MILLIS = (unsigned long)-1;
 
 class TimedEvent;
 typedef class TimedEvent TimedEvent;
-typedef void (*EventFunc)(const TimedEvent* timed_event);
+typedef void (*EventFunc)(TimedEvent* timed_event);
 
 class TimedEvent {
     private:
@@ -30,8 +29,10 @@ class TimedEvent {
         // return true if eventFunc updated to event_func
         bool reInitIfNot(EventFunc event_func);
         const Millis& elapsed(void);
-            // returns elapsed time (assumes previousTime != 0 != elapsedTime)
+        // returns elapsed time (assumes previousTime != 0 != elapsedTime)
         bool update(void);
-            // returns true if eventFunc called
+        // returns true if eventFunc called
+        void reset(void);
+        // Begin timing period from start
 };
 #endif // TIMEDEVENT_H

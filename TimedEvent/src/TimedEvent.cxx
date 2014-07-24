@@ -9,13 +9,13 @@ TimedEvent::TimedEvent(const Millis& current_time,
                        currentTime(current_time),
                        intervalTime(interval_time),
                        eventFunc(event_func),
-                       previousTime(current_time),
+                       previousTime(currentTime),
                        elapsedTime(0) {}
 
 bool TimedEvent::reInitIfNot(EventFunc event_func) {
     if (eventFunc != event_func) {
         eventFunc = event_func;
-        previousTime = currentTime;
+        previousTime = 0;
         elapsedTime = 0;
         return true;
     } else {
@@ -25,11 +25,9 @@ bool TimedEvent::reInitIfNot(EventFunc event_func) {
 
 const Millis& TimedEvent::elapsed(void) {
     static Millis elapsed_result;
-    if (currentTime <= previousTime) { // currentTime has wrapped
-        elapsed_result = ((unsigned long)-1) - previousTime;
-        elapsed_result += currentTime;
-    } else { // no wrap
-        elapsed_result = currentTime - previousTime;
+    elapsed_result = currentTime - previousTime;
+    if (currentTime < previousTime) {
+        elapsed_result = currentTime + (MAX_MILLIS - previousTime);
     }
     return elapsed_result;
 }
@@ -43,4 +41,9 @@ bool TimedEvent::update(void) {
     } else {
         return false;
     }
+}
+
+void TimedEvent::reset(void) {
+    elapsedTime = 0;
+    previousTime = currentTime;
 }
