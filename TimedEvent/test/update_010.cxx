@@ -5,7 +5,7 @@
 const int REQUIRED_TRIGGERS = 1;
 int eventTriggered = 0;
 
-void TestEvent(const TimedEvent* timed_event) {
+void TestEvent(TimedEvent* timed_event) {
     eventTriggered += 1;
 }
 

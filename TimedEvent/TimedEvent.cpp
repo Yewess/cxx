@@ -26,7 +26,7 @@ bool TimedEvent::reInitIfNot(EventFunc event_func) {
 const Millis& TimedEvent::elapsed(void) {
     static Millis elapsed_result;
     elapsed_result = currentTime - previousTime;
-    if (currentTime < previousTime) {
+    if (currentTime <= previousTime) {
         elapsed_result = currentTime + (MAX_MILLIS - previousTime);
     }
     return elapsed_result;
