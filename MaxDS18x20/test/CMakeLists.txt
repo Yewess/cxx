@@ -17,7 +17,7 @@ string(REPLACE ".cxx" "" testnames "${testfiles}")
 foreach(testname IN LISTS testnames)
     message("Adding testname ${testname}")
     # Add executable target <name> to build from source files listed
-    add_executable(${testname} "${testname}.cxx" $<TARGET_OBJECTS:MaxDS18B20>)
+    add_executable(${testname} "${testname}.cxx" $<TARGET_OBJECTS:MaxDS18x20>)
     # Add a test target for a test executable
     add_test(${testname} ${testname})
 endforeach(testname)

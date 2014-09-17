@@ -1,7 +1,7 @@
 #include <iostream>
 #include <require.h>
 #include <FakeOneWire.h>
-#include <MaxDS18B20.h>
+#include <MaxDS18x20.h>
 
 int main(int argc, char** argv) {
     using namespace std;
