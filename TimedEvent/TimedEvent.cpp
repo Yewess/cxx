@@ -9,7 +9,7 @@ TimedEvent::TimedEvent(const Millis& current_time,
                        currentTime(current_time),
                        intervalTime(interval_time),
                        eventFunc(event_func),
-                       previousTime(currentTime),
+                       previousTime(currentTime-1),
                        elapsedTime(0) {}
 
 bool TimedEvent::reInitIfNot(EventFunc event_func) {
